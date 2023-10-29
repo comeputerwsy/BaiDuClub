@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <ctype.h> // For isalpha function
+
+// Function to encrypt the sentence
+void encryptSentence(char *sentence, int k) {
+    // Iterate through each character in the sentence
+    for (int i = 0; sentence[i] != '\0'; i++) {
+        if (isalpha(sentence[i]) && isupper(sentence[i])) {
+            // If the character is an uppercase letter
+            char originalChar = sentence[i];
+            // Calculate the new character by adding k to the current character
+            char newChar = 'A' + (originalChar - 'A' + k) % 26;
+            sentence[i] = newChar;
+        }
+        // Otherwise, leave non-alphabetic characters unchanged
+    }
+}
+
+int main() {
+    char sentence[81]; // Declare a character array to store the sentence (max 80 characters)
+    int k;
+
+    // Input the sentence
+    printf("Enter a sentence (up to 80 characters): ");
+    fgets(sentence, sizeof(sentence), stdin);
+
+    // Remove the newline character from the input
+    for (int i = 0; sentence[i] != '\0'; i++) {
+        if (sentence[i] == '\n') {
+            sentence[i] = '\0';
+            break;
+        }
+    }
+
+    // Input the value of k
+    printf("Enter a positive integer k (1 <= k <= 26): ");
+    scanf("%d", &k);
+
+    // Check if k is within the valid range
+    if (k >= 1 && k <= 26) {
+        encryptSentence(sentence, k);
+        printf("Encrypted sentence: %s\n", sentence);
+    } else {
+        printf("k is not within the valid range (1 <= k <= 26)\n");
+    }
+
+    return 0;
+}  由chatgpt生成
